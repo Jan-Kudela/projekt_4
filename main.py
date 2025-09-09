@@ -1,6 +1,7 @@
 ukoly = []
 
 def pridat_ukol():
+    """funkce pro zadání nového úkolu - jeho jména a obsahu"""
     while True:
         task_name = input("Zadejte název úkolu:")
         task_cont = input("Zadejte popis úkolu:")
@@ -16,24 +17,35 @@ def pridat_ukol():
             break
 
 def zobrazit_ukoly():
-    for index, ukol in enumerate(ukoly):
-        print(f"Seznam úkolů:\n{index+1}. {ukol[0]} - {ukol[1]}")
+    """funkce vypíše seznam zadaných úkolů"""
+    print("Seznam úkolů:\n")
+    if len(ukoly) == 0:
+        print("Žádný ukol není zadán.")
+    else:
+        for index, ukol in enumerate(ukoly):
+            print(f"{index+1}. {ukol[0]} - {ukol[1]}")
 
 
 def odstranit_ukol():
-    zobrazit_ukoly()
-    while True:
-        number_del = input("Zadejte číslo úkolu, který chcete odstranit: ")
-        if number_del.isdigit():
-            number_del = int(number_del)
-            break
-        else:
-            print(f"Zadaná hodnota musí být číslo v rozsahu {len(ukoly)}.")
-            continue
-    
-    print(f"Úkol {ukoly[number_del-1]} byl odstraněn.")
-    ukoly.pop(number_del-1)        
-    
+    """funkce smaže vybraný úkol"""
+    if len(ukoly) == 0:
+        print("Žádný úkol není aktuálně zadán.")
+    else:
+        zobrazit_ukoly()
+        while True:
+            number_del = input("Zadejte číslo úkolu, který chcete odstranit: ")
+            if number_del.isdigit():
+                number_del = int(number_del)
+                if number_del not in range(1,len(ukoly)+1):
+                    print(f"Zadaná hodnota musí být číslo v rozsahu 1 - {len(ukoly)}.")
+                else:
+                    break
+            else:
+                print("Zadaná hodnota musí být číslo v rozsahu 1-4")
+                continue
+        vybrany_ukol = ukoly[number_del-1]    
+        print(f"Úkol {vybrany_ukol[0]} - {vybrany_ukol[0]} byl odstraněn.")
+        ukoly.pop(number_del-1)        
 
 
 def hlavni_menu():
@@ -62,5 +74,8 @@ def hlavni_menu():
             zobrazit_ukoly()
         elif choice_number == 3:
             odstranit_ukol()
+        else:
+            print("Program je ukončen.")
+            break
 
 hlavni_menu()
