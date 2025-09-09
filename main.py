@@ -78,4 +78,5 @@ def hlavni_menu():
             print("Program je ukončen.")
             break
 
-hlavni_menu()
+if __name__ == "__main__":
+    hlavni_menu()
