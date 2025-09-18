@@ -32,20 +32,8 @@ def odstranit_ukol(number_del):
         print("Žádný úkol není aktuálně zadán.")
     else:
         zobrazit_ukoly()
-        while True:
-            #number_del = input("Zadejte číslo úkolu, který chcete odstranit: ")
-            digit_check(number_del)
-            #if number_del.isdigit():
-                #number_del = int(number_del)
-            if number_del not in range(1,len(ukoly)+1):
-                print(f"Zadaná hodnota musí být číslo v rozsahu 1 - {len(ukoly)}.")
-            else:
-                break
-           # else:
-                #print("Zadaná hodnota musí být číslo v rozsahu 1-4")
-                #continue
         vybrany_ukol = ukoly[number_del-1]    
-        print(f"Úkol {vybrany_ukol[0]} - {vybrany_ukol[0]} byl odstraněn.")
+        print(f"Úkol {vybrany_ukol[0]} byl odstraněn.")
         ukoly.pop(number_del-1)        
 
 
@@ -56,18 +44,15 @@ def hlavni_menu():
         print("2. Zobrazit všechny úkoly")
         print("3. Odstranit úkol")
         print("4. Konec programu")
+        
         while True:
             choice_number = (input("Vyberte možnost (1-4):"))
             choice_nr_checked = digit_check(choice_number)
-            #if choice_number.isdigit():
-                #choice_number = int(choice_number)
+           
             if choice_nr_checked not in range(1,5):
                 print("Zadané číslo musí být v rozsahu 1-4")
             else:
                 break
-            #else:
-                #print("Zadaná hodnota musí být číslo v rozsahu 1-4")
-                #continue
 
         
         if choice_nr_checked == 1:
@@ -80,13 +65,24 @@ def hlavni_menu():
                     pridat_ukol(task_name, task_cont)
                     break
 
+        
         elif choice_nr_checked == 2:
             zobrazit_ukoly()
 
+        
         elif choice_nr_checked == 3:
-            number_to_del = input(
+            while True:
+                zobrazit_ukoly()
+                number_to_del = input(
                 "Zadejte číslo úkolu, který chcete odstranit: ")
-            odstranit_ukol(number_to_del)
+                nr_checked = digit_check(number_to_del)
+                if nr_checked not in range(1,len(ukoly)+1):
+                    print(
+                        f"Zadané číslo musí být v rozsahu 1 - {len(ukoly)}."
+                        )
+                else:
+                    odstranit_ukol(nr_checked)
+                    break
 
         else:
             print("Program je ukončen.")
