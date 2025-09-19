@@ -10,7 +10,6 @@ def digit_check(digit_nr):
 
 def pridat_ukol(name, cont):
     """funkce pro zadání nového úkolu - jeho jména a obsahu"""
-    
     ukol_pridani = (name, cont)
     ukoly.append(ukol_pridani)
     print("Úkol přidán.\n")
@@ -19,22 +18,17 @@ def pridat_ukol(name, cont):
 def zobrazit_ukoly():
     """funkce vypíše seznam zadaných úkolů"""
     print("Seznam úkolů:\n")
-    if len(ukoly) == 0:
-        print("Žádný ukol není zadán.")
-    else:
-        for index, ukol in enumerate(ukoly):
-            print(f"{index+1}. {ukol[0]} - {ukol[1]}")
+ 
+    for index, ukol in enumerate(ukoly):
+        print(f"{index+1}. {ukol[0]} - {ukol[1]}")
 
 
 def odstranit_ukol(number_del):
     """funkce smaže vybraný úkol"""
-    if len(ukoly) == 0:
-        print("Žádný úkol není aktuálně zadán.")
-    else:
-        zobrazit_ukoly()
-        vybrany_ukol = ukoly[number_del-1]    
-        print(f"Úkol {vybrany_ukol[0]} byl odstraněn.")
-        ukoly.pop(number_del-1)        
+    zobrazit_ukoly()
+    vybrany_ukol = ukoly[number_del-1]    
+    print(f"Úkol {vybrany_ukol[0]} byl odstraněn.")
+    ukoly.pop(number_del-1)        
 
 
 def hlavni_menu():
@@ -67,22 +61,29 @@ def hlavni_menu():
 
         
         elif choice_nr_checked == 2:
-            zobrazit_ukoly()
+            if not ukoly:
+                print("žádný úkol není zadán\n")
+            else:    
+                zobrazit_ukoly()
 
         
         elif choice_nr_checked == 3:
-            while True:
+            if not ukoly:
+                print("žádný úkol není zadán\n")
+            else:
                 zobrazit_ukoly()
-                number_to_del = input(
-                "Zadejte číslo úkolu, který chcete odstranit: ")
-                nr_checked = digit_check(number_to_del)
-                if nr_checked not in range(1,len(ukoly)+1):
-                    print(
+                while True:
+                    number_to_del = input(
+                    "Zadejte číslo úkolu, který chcete odstranit: "
+                    )
+                    nr_checked = digit_check(number_to_del)
+                    if nr_checked not in range(1,len(ukoly)+1):
+                        print(
                         f"Zadané číslo musí být v rozsahu 1 - {len(ukoly)}."
                         )
-                else:
-                    odstranit_ukol(nr_checked)
-                    break
+                    else:
+                        odstranit_ukol(nr_checked)
+                        break
 
         else:
             print("Program je ukončen.")
